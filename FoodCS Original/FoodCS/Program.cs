@@ -742,7 +742,7 @@ namespace FoodCS
             }
             return index;
         }
-
+        /**/
         public void ModifyCompany(int index)
         {
             string choice;
