@@ -11,7 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-
+/*
+Throughout the whole program, there is no negative number validation. 
+*/
 
 
 
@@ -111,7 +113,7 @@ namespace FoodCS
             Household temp = new Household(x, y);
             households.Add(temp);
         }
-        //displays all the households in the settlement
+        //displays all the households in the settlement - "not paged at all(not in any way) "
         public void DisplayHouseholds()
         {
             Console.WriteLine("\n**********************************");
@@ -139,7 +141,13 @@ namespace FoodCS
             }
         }
     }
-    //this class is used to create a settlement with extra households and extra size
+    /*
+    The large settlement class below is just a poor excuse for inheritance. The main difference between this class and the settlement class above is the
+    change of the (extraXSize, extraYSize and extraHouseholds) parameters. These parameters simply add onto the original xSize, ySize and households parameters. 
+    
+    This class is redundant because the extras can simply be given a default value in the settlement class above and added on in the constructor. This will reduce 
+    the amount of code in the file which the program easier to read, understand and maintain.                                          
+    */
     class LargeSettlement : Settlement
     {
         public LargeSettlement(int extraXSize, int extraYSize, int extraHouseholds)
@@ -154,8 +162,13 @@ namespace FoodCS
             }
         }
     }
-    /*the outlet class is used to store information on the outlets which 
-    it can alter the daily cost and capacity*/
+    /*
+    The class below generates the outlets. In the simulation, outlets are where the households buy the food. 
+    
+    Each outlet has its own x,y coords in the settlement.
+    "IDs of outlets are not printed properly. THis is because they are actually zero-indexed and not one-indexed. This makes it unnecessarily difficult
+    for the user to change/modify households. "
+    */
     class Outlet
     {
         private static Random rnd = new Random();
@@ -235,10 +248,15 @@ namespace FoodCS
         }
     }
 
+    /*
+    The class below is used to create the companies in the simulation. Each instance of company has its own set of outlets.
+    
+    " It is is important to note that companies cannnot go bankrupt"
+    
+    */ 
+    
     class Company
     {
-        /*this class is used to create a company which can have outlets
-        it sets the base cost for its outlets and has differnt type of outlets*/
         private static Random rnd = new Random();
         protected string name, category;
         protected double balance, reputationScore, avgCostPerMeal, avgPricePerMeal, dailyCosts, familyOutletCost, fastFoodOutletCost, namedChefOutletCost, fuelCostPerUnit, baseCostOfDelivery;
@@ -432,7 +450,7 @@ namespace FoodCS
         }
 
         /*
-        The function below creates the master list of all the outlets. 
+        The function below creates the master list of all the outlets for a specific company.  
         
         
         */
@@ -482,6 +500,12 @@ namespace FoodCS
         }
     }
 
+    /*
+    
+    UI is obtuse. This makes it really difficult for the user to see what is actually happening in the simulation.
+    
+    */
+    
     class Simulation
     {
         private static Random rnd = new Random();
@@ -572,7 +596,7 @@ namespace FoodCS
                 Console.WriteLine(details + "\n");
             }
         }
-
+        // "adds households. can exceed the household limit. "
         private void ProcessAddHouseholdsEvent()
         {
             int NoOfNewHouseholds = rnd.Next(1, 5);
